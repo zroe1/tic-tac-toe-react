@@ -1,0 +1,16 @@
+.row {
+  display: flex;
+  /* padding: 5px; */
+  width: 60vw;
+  /* height: 20vw; */
+  /* background-color: red; */
+  /* padding-top: 40%; */
+  flex-direction: row;
+  justify-content: space-around;
+  align-items:center;
+
+}
+.box {
+  border: 3px black solid;
+  /* margin: 4px; */
+}
