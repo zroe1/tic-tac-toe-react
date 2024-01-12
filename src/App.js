@@ -1,35 +1,31 @@
 import './App.css';
-import { useState } from "react"
+import Board from "./components/Board"
+import { useState } from "react";
+
 
 function App({n}) {
-  const [board, setBoard] = useState(Array.from({length: n}, () => new Array(n).fill("")));
-
-  const rowSize = {
-    height: `${Math.round(60/n)}vw`
+  const printBoard = (b) => {
+    console.log(b);
+    console.log("hello world")
   }
-  console.log(rowSize.height);
+  const [playerMove, setPlayerMove] = useState("X")
 
-  const boxSize = {
-    height: `${Math.round(60/n)-2}vw`,
-    width: `${Math.round(60/n)-2}vw`
+  const swapPlayers = () => {
+    setPlayerMove(playerMove => {
+      if (playerMove === "X") {
+        return "O"
+      } else {
+        return "X"
+      }
+    })
   }
 
   return (
-    <div className='board-container'>
-      {board.map((row) => {
-        return (
-          <div style={rowSize} className='row'>
-            {row.map((item)=> {
-              return (
-                <div style={boxSize} className='box'>{item}</div>
-              )
-            })}
-          </div>
-        )
-      })}
+    <div className='container'>
+      <Board n={n} getBoard={printBoard} playerMove={playerMove} switchPlayers={swapPlayers}/> 
+      <p>Player Turn: {playerMove}</p>
     </div>
-
-  );
+  )
 }
 
 export default App;

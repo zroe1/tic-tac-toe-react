@@ -1,0 +1,13 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items:center;
+}
+.box {
+  border: 4px black solid;
+  border-radius: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
