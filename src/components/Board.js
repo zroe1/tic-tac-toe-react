@@ -1,10 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Board.css";
 
-const WIDTH = 40;
+// const WIDTH = 40;
 
 function Board( {n, getBoard, playerMove, switchPlayers} ) {
   const [board, setBoard] = useState(Array.from({length: n}, () => new Array(n).fill("")));
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+    }
+    window.addEventListener('resize', handleResize)
+  }, [])
+
+  let WIDTH = 40;
+  if (width < height) {
+    WIDTH = 80;
+  }
 
   const rowSize = {
     height: `${Math.round(WIDTH/n)}vw`,
@@ -12,8 +27,8 @@ function Board( {n, getBoard, playerMove, switchPlayers} ) {
   }
 
   const boxSize = {
-    height: `${Math.round(WIDTH/n)-2}vw`,
-    width: `${Math.round(WIDTH/n)-2}vw`,
+    height: `${width > 700 ? Math.round(WIDTH/n)-2 : Math.round(WIDTH/n)-2 - 5}vw`,
+    width: `${width > 700 ? Math.round(WIDTH/n)-2 : Math.round(WIDTH/n)-2 - 5}vw`,
     fontSize: `${Math.round(WIDTH/(n* 3))}vw`
   }
 
