@@ -17,6 +17,9 @@ function App() {
     setOWins((wins => wins + 1))
   }
   const addToWinReccord = (winner) => {
+    if (winner === undefined) {
+      return;
+    }
     setWinReccord((record) => [`Game ${gameNum}: ${winner}`, ...record])
     setGameNum(game => ++game)
   }
