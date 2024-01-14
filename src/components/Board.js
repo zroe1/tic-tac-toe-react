@@ -23,7 +23,7 @@ function Board( {n, getBoard, playerMove, switchPlayers} ) {
     }
     const firstPiece = row[0];
     for (let i = 1; i < n; i++) {
-      if (i !== firstPiece) {
+      if (row[i] !== firstPiece) {
         return false
       }
     }
@@ -52,6 +52,28 @@ function Board( {n, getBoard, playerMove, switchPlayers} ) {
         return board[0][i];
       }
     }
+
+    let isForwardDiagonal = true;
+    let isBackwardDiagonal = true;
+    if (board[0][0] === "") {isBackwardDiagonal = false;}
+    if (board[0][n - 1] === "") {isForwardDiagonal = false;}
+    // loop to check for diagonals
+    for (let i = 0; i < n; i++) {
+      if (board[i][i] !== board[0][0]) {
+        isBackwardDiagonal = false;
+      }
+      if (board[i][n - i - 1] !== board[0][n - 1]) {
+        isForwardDiagonal = false
+      }
+    }
+    
+    if (isBackwardDiagonal) {
+      return board[0][0]
+    }
+    if (isForwardDiagonal) {
+      return board[0][n - 1]
+    }
+
     return null;
   }
 
