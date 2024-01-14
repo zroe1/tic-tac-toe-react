@@ -3,7 +3,7 @@ import "./Board.css";
 
 // const WIDTH = 40;
 
-function Board( {n, getBoard, playerMove, switchPlayers} ) {
+function Board( {n, playerMove, setXWins, setOWins, switchPlayers} ) {
   const [board, setBoard] = useState(Array.from({length: n}, () => new Array(n).fill("")));
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
@@ -112,15 +112,24 @@ function Board( {n, getBoard, playerMove, switchPlayers} ) {
     setBoard((board) => {
       const newBoard = board.map((row) => [...row])
       newBoard[location[0]][location[1]] = playerMove;
-      if (getWinner(newBoard) !== null) {
-        console.log(`We have a winner ${getWinner(newBoard)}`);
-      } else if (isDraw(newBoard)) {
-        console.log("We have a draw");
-      }
       return newBoard;
     })
     switchPlayers();
   }
+
+  useEffect(() => {
+    const winner  = getWinner(board);
+    if (winner !== null) {
+      console.log(`We have a winner ${getWinner(board)}`);
+      if (winner === 'X') {
+        setXWins()
+      } else {
+        setOWins()
+      }
+    } else if (isDraw(board)) {
+      console.log("We have a draw");
+    }
+  }, [board])
 
   return (
     <div className='board-container'>
