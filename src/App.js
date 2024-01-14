@@ -1,9 +1,9 @@
 import './App.css';
 import Board from "./components/Board"
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 
-function App({n}) {
+function App() {
   const [playerMove, setPlayerMove] = useState("X")
   const [xWins, setXWins] = useState(0);
   const [yWins, setOWins] = useState(0);
@@ -31,11 +31,20 @@ function App({n}) {
     })
   }
 
+  const [boardSize, setBoardSize] = useState(0)
+  const [isBoardSizeSelected, setisBoardSizeSelected] = useState(false)
+
   return (
-    <div className='container'>
+    <>
+    {!isBoardSizeSelected ? <div>
+      <h1>select your board size</h1>
+      <input type="number" onChange={(e) => setBoardSize(e.target.value)}/> 
+      <button onClick={() => setisBoardSizeSelected(true)}>submit</button>
+    </div> : <></>}
+    {isBoardSizeSelected ? <div className='container'>
       <h1>tic-tac-toe</h1>
       <Board 
-        n={n}
+        n={boardSize}
         playerMove={playerMove}
         switchPlayers={swapPlayers}
         setXWins={incrementXWins}
@@ -52,7 +61,8 @@ function App({n}) {
           <li key={i}>{record}</li>
         )
       })}
-    </div>
+    </div> : <></>}
+    </>
   )
 }
 
