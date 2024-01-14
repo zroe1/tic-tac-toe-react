@@ -92,12 +92,25 @@ function Board( {n, getBoard, playerMove, switchPlayers} ) {
     return null;
   }
 
+  const isDraw = (board) => {
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
+        if (board[i][j] === "") {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
   const handleMove = (location) => {
     setBoard((board) => {
       const newBoard = board.map((row) => [...row])
       newBoard[location[0]][location[1]] = playerMove;
       if (getWinner(newBoard) !== null) {
-        console.log(`We have a winner ${getWinner(newBoard)}`)
+        console.log(`We have a winner ${getWinner(newBoard)}`);
+      } else if (isDraw(newBoard)) {
+        console.log("We have a draw");
       }
       return newBoard;
     })
