@@ -32,6 +32,14 @@ function Board( {n, playerMove, setXWins, setOWins, switchPlayers} ) {
     fontSize: `${Math.round(WIDTH/(n* 3))}vw`
   }
 
+  const resetBoard = () => {
+    for (let i = 0; i < n;  i++) {
+      for (let j = 0; j < n; j++) {
+        board[i][j] = "";
+      }
+    }
+  }
+
   const isWinningRow = (row) => {
     if (row[0] === "") {
       return false;
@@ -120,6 +128,7 @@ function Board( {n, playerMove, setXWins, setOWins, switchPlayers} ) {
   useEffect(() => {
     const winner  = getWinner(board);
     if (winner !== null) {
+      resetBoard()
       console.log(`We have a winner ${getWinner(board)}`);
       if (winner === 'X') {
         setXWins()
@@ -127,6 +136,7 @@ function Board( {n, playerMove, setXWins, setOWins, switchPlayers} ) {
         setOWins()
       }
     } else if (isDraw(board)) {
+      resetBoard()
       console.log("We have a draw");
     }
   }, [board])
