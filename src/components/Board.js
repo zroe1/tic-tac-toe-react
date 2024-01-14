@@ -3,7 +3,7 @@ import "./Board.css";
 
 // const WIDTH = 40;
 
-function Board( {n, playerMove, setXWins, setOWins, switchPlayers} ) {
+function Board( {n, playerMove, setXWins, setOWins, switchPlayers, addWins} ) {
   const [board, setBoard] = useState(Array.from({length: n}, () => new Array(n).fill("")));
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
@@ -135,6 +135,7 @@ function Board( {n, playerMove, setXWins, setOWins, switchPlayers} ) {
       } else {
         setOWins()
       }
+      addWins(winner)
     } else if (isDraw(board)) {
       resetBoard()
       console.log("We have a draw");

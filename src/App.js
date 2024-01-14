@@ -7,12 +7,18 @@ function App({n}) {
   const [playerMove, setPlayerMove] = useState("X")
   const [xWins, setXWins] = useState(0);
   const [yWins, setOWins] = useState(0);
+  const [winRecord, setWinReccord] = useState([])
+  const [gameNum, setGameNum] = useState(1)
 
   const incrementXWins = () => {
     setXWins((wins => wins + 1))
   }
   const incrementOWins = () => {
     setOWins((wins => wins + 1))
+  }
+  const addToWinReccord = (winner) => {
+    setWinReccord((record) => [`Game ${gameNum}: ${winner}`, ...record])
+    setGameNum(game => ++game)
   }
 
   const swapPlayers = () => {
@@ -34,12 +40,18 @@ function App({n}) {
         switchPlayers={swapPlayers}
         setXWins={incrementXWins}
         setOWins={incrementOWins}
+        addWins={addToWinReccord}
       /> 
       <p>Player Turn: {playerMove}</p>
       <div className='win-counts'>
         <p style={{marginRight: "10px"}}>X wins: {xWins}</p>
         <p style={{marginLeft: "10px"}}>O wins: {yWins}</p>
       </div>
+      {winRecord.map((record, i) => {
+        return (
+          <li key={i}>{record}</li>
+        )
+      })}
     </div>
   )
 }
