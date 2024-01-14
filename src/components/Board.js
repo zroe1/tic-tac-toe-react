@@ -104,6 +104,11 @@ function Board( {n, getBoard, playerMove, switchPlayers} ) {
   }
 
   const handleMove = (location) => {
+    if (board[location[0]][location[1]] !== "") {
+      alert("illegal move: choose an empty location");
+      return;
+    }
+
     setBoard((board) => {
       const newBoard = board.map((row) => [...row])
       newBoard[location[0]][location[1]] = playerMove;
