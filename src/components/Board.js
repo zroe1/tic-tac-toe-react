@@ -9,7 +9,6 @@ function Board( {n, getBoard, playerMove, switchPlayers} ) {
   const rowSize = {
     height: `${Math.round(WIDTH/n)}vw`,
     width: `${WIDTH}vw`,
-    // paddingLeft: `${Math.round((100- WIDTH)/2)}vw`
   }
 
   const boxSize = {
@@ -18,10 +17,51 @@ function Board( {n, getBoard, playerMove, switchPlayers} ) {
     fontSize: `${Math.round(WIDTH/(n* 3))}vw`
   }
 
+  const isWinningRow = (row) => {
+    if (row[0] === "") {
+      return false;
+    }
+    const firstPiece = row[0];
+    for (let i = 1; i < n; i++) {
+      if (i !== firstPiece) {
+        return false
+      }
+    }
+    return true
+  }
+
+  const isWinningColumn = (board, col) => {
+    if (board[0][col] === "") {
+      return false;
+    }
+    const firstPiece = board[0][col];
+    for (let i = 1; i < n; i++) {
+      if (board[i][col] !== firstPiece) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  const getWinner = (board) => {
+    for (let i = 0; i < n; i++) {
+      if (isWinningRow(board[i])) {
+        return board[i][0];
+      }
+      if (isWinningColumn(board, i)) {
+        return board[0][i];
+      }
+    }
+    return null;
+  }
+
   const handleMove = (location) => {
     setBoard((board) => {
       const newBoard = board.map((row) => [...row])
       newBoard[location[0]][location[1]] = playerMove;
+      if (getWinner(newBoard) !== null) {
+        console.log(`We have a winner ${getWinner(newBoard)}`)
+      }
       return newBoard;
     })
     switchPlayers();
